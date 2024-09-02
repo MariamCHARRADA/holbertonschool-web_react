@@ -33,6 +33,12 @@ h1 {
   text-align: left;
   padding: 40px;
 }
+.App-body label,
+.App-body input,
+.App-body button {
+  margin-right: 10px;
+}
+
 .App-footer {
   align-self: stretch;
   border-top-style: solid;
