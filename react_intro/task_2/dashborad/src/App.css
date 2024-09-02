@@ -6,7 +6,6 @@
   justify-content: space-between;
   min-height: 100vh;
   font-family: sans-serif;
-
 }
 
 .App-logo {
@@ -20,6 +19,7 @@ h1 {
 }
 
 .App-header {
+  padding-top: 160px;
   display: flex;
   align-self: stretch;
   align-items: center;

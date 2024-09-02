@@ -8,7 +8,7 @@ export default function Notifications() {
         console.log('Close button has been clicked')
     };
   return (
-    <div className="Notifications" style={{position: "relative"}}>
+    <div className="Notifications">
       <p>Here is the list of notifications</p>
       <ul>
         <li data-priority="default">New course available</li>
@@ -19,7 +19,7 @@ export default function Notifications() {
 
       </ul>
       <button
-        style={{ position: "absolute", right: "10px" , top: "10px", cursor: "pointer" }}
+        style={{ position: "absolute", right: "10px" , top: "10px", cursor: "pointer", backgroundColor: "transparent", border: "none"}}
         aria-label="close"
         onClick={handleClick}
       >
