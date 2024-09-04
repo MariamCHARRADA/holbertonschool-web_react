@@ -1,1 +1,13 @@
-console.log("npm run build done!");
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import Notifications from "./Notifications";
+
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(
+  <React.StrictMode>
+    <App />
+    <Notifications />
+  </React.StrictMode>
+);
