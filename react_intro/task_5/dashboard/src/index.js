@@ -1,1 +1,1 @@
-console.log("Hello, Webpack with Hot Reloading and Image Loading!");
+console.log("npm run build done!");
