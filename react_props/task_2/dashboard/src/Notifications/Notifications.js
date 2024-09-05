@@ -11,11 +11,12 @@ export default function Notifications() {
     <div className="Notifications">
       <p>Here is the list of notifications</p>
       <ul>
-        <NotificationItem data-priority="default">New course available</NotificationItem>
-        <NotificationItem data-priority="urgent">New resume available</NotificationItem>
-        <NotificationItem data-priority="urgent">
-          <span dangerouslySetInnerHTML={{ __html: getLatestNotification() }} />
-        </NotificationItem>
+        <NotificationItem type="default" value="New course available" />
+        <NotificationItem type="urgent" value="New resume available" />
+        <NotificationItem
+          type="urgent"
+          html={{ __html: getLatestNotification() }}
+        />
       </ul>
       <button
         style={{
