@@ -1,0 +1,17 @@
+.Notifications {
+    padding: 10px;
+    border: 1px dashed #ec1717;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 97%;
+    margin-top: 10px;
+}
+li[data-notification-type="default"] {
+
+    color: rgb(4, 4, 177)
+}
+li[data-notification-type="urgent"] {
+
+    color: red
+}
