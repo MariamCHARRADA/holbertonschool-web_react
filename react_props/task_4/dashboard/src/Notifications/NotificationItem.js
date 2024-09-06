@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const NotificationItem = ({ type, html, value }) => (
-  <li data-notification-type={type} dangerouslySetInnerHTML={html}>
+  <li>
     {html ? <span dangerouslySetInnerHTML={html}></span> : value}
   </li>
 );
@@ -14,6 +14,8 @@ NotificationItem.propTypes = {
 };
 NotificationItem.defaultProps = {
   type: "default",
+  html: null,
+  value: "",
 };
 
 export default NotificationItem;

@@ -7,11 +7,11 @@
     width: 97%;
     margin-top: 10px;
 }
-li[data-notification-type="default"] {
+[data-notification-type="default"] {
 
     color: rgb(4, 4, 177)
 }
-li[data-notification-type="urgent"] {
+[data-notification-type="urgent"] {
 
     color: red
 }
