@@ -1,17 +1,26 @@
 .Notifications {
-    padding: 10px;
-    border: 1px dashed #ec1717;
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    width: 97%;
-    margin-top: 10px;
+  padding: 10px;
+  padding-top: 0px;
+  border: 1.5px dashed #ec1717;
+  position: fixed;
+  right: 5px;
+  top: 45px;
+  width: 350px;
+  height: 105px;
+  font-size: 15px;
 }
-[data-notification-type="default"] {
-
-    color: rgb(4, 4, 177)
+.menuItem {
+  margin-right: 3px;
+  font-weight: bold;
+  position: absolute;
+  top: 0px;
+  right: 10px;
 }
-[data-notification-type="urgent"] {
 
-    color: red
+.default-notif {
+  color: rgb(4, 4, 177); 
+}
+
+.urgent-notif {
+  color: red;
 }

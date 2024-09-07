@@ -27,8 +27,8 @@ export default function Notifications({ displayDrawer }) {
           <button
             style={{
               position: "absolute",
-              right: "10px",
-              top: "10px",
+              right: "5px",
+              top: "5px",
               cursor: "pointer",
               backgroundColor: "transparent",
               border: "none",
