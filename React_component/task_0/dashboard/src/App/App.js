@@ -31,7 +31,7 @@ export default class App extends Component {
             listNotifications={listNotifications}
           />
           <Header />
-          {!isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+          {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
           <Footer />
         </div>
       </>
