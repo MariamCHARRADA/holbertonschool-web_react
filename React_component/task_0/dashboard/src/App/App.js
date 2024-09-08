@@ -22,6 +22,7 @@ const listNotifications = [
 export default class App extends Component {
   render() {
     const { isLoggedIn } = this.props;
+
     return (
       <>
         <Notifications
@@ -39,4 +40,7 @@ export default class App extends Component {
 }
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
+};
+App.defaultProps = {
+  isLoggedIn: false,
 };
