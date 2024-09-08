@@ -19,17 +19,14 @@ const listNotifications = [
   { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
 ];
 
-export default class App extends Component {
+class App extends Component {
   render() {
     const { isLoggedIn } = this.props;
 
     return (
       <>
+        <Notifications listNotifications={listNotifications} />
         <div className="App">
-          <Notifications
-            displayDrawer={true}
-            listNotifications={listNotifications}
-          />
           <Header />
           {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
           <Footer />
@@ -44,3 +41,5 @@ App.propTypes = {
 App.defaultProps = {
   isLoggedIn: false,
 };
+
+export default App;
