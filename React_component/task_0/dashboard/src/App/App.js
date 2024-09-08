@@ -25,11 +25,11 @@ export default class App extends Component {
 
     return (
       <>
-        <Notifications
-          displayDrawer={true}
-          listNotifications={listNotifications}
-        />
         <div className="App">
+          <Notifications
+            displayDrawer={true}
+            listNotifications={listNotifications}
+          />
           <Header />
           {!isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
           <Footer />
