@@ -1,0 +1,18 @@
+#CourseList {
+    border: 1px solid lightgrey;
+}
+#CourseList th {
+    border-bottom: 2px solid lightgrey;
+    text-align: left;
+    padding: 5px;
+
+}
+#CourseList th[colSpan="2"] {
+    text-align: center;
+    padding: 5px;
+
+}
+#CourseList tr {
+    text-align: left;
+    padding: 5px;
+}
