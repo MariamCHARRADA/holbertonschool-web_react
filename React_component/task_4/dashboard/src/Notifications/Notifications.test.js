@@ -96,5 +96,66 @@ describe("<Notifications />", () => {
 
       expect(mockMarkAsRead).toHaveBeenCalledWith(1);
     });
+    it("does not re-render when listNotifications prop is updated with the same length", () => {
+      const listNotifications = [
+        {
+          id: 1,
+          html: { __html: "<p>Notification 1</p>" },
+          type: "default",
+          value: "",
+        },
+      ];
+      const wrapper = shallow(
+        <Notifications
+          listNotifications={listNotifications}
+          displayDrawer={true}
+        />
+      );
+
+      wrapper.setProps({ listNotifications: [...listNotifications] });
+      wrapper.update();
+
+      expect(wrapper.find(NotificationItem)).toHaveLength(
+        listNotifications.length
+      );
+    });
+
+    it("re-renders when listNotifications prop is updated with a longer list", () => {
+      const initialListNotifications = [
+        {
+          id: 1,
+          html: { __html: "<p>Notification 1</p>" },
+          type: "default",
+          value: "",
+        },
+      ];
+      const updatedListNotifications = [
+        ...initialListNotifications,
+        {
+          id: 2,
+          html: { __html: "<p>Notification 2</p>" },
+          type: "urgent",
+          value: "",
+        },
+      ];
+
+      const wrapper = shallow(
+        <Notifications
+          listNotifications={initialListNotifications}
+          displayDrawer={true}
+        />
+      );
+
+      expect(wrapper.find(NotificationItem)).toHaveLength(
+        initialListNotifications.length
+      );
+
+      wrapper.setProps({ listNotifications: updatedListNotifications });
+      wrapper.update();
+
+      expect(wrapper.find(NotificationItem)).toHaveLength(
+        updatedListNotifications.length
+      );
+    });
   });
 });
