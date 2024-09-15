@@ -13,7 +13,7 @@ class BodySectionWithMarginBottom extends Component {
   }
 }
 
-bodySectionWithMargin.propTypes = {
+BodySectionWithMarginBottom.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node,
 };
