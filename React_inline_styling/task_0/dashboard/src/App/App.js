@@ -43,7 +43,7 @@ class App extends Component {
         <Notifications listNotifications={listNotifications} />
         <div className="App">
           <Header />
-          {isLoggedIn ? (
+          {!isLoggedIn ? (
             <BodySectionWithMarginBottom title="Course list">
               <CourseList listCourses={listCourses} />
             </BodySectionWithMarginBottom>
