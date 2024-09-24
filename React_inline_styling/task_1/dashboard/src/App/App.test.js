@@ -13,7 +13,7 @@ describe("<App />", () => {
     StyleSheetTestUtils.suppressStyleInjection(); // Prevent style injection
   });
 
-  afterEach(() => {
+  afterAll(() => {
     StyleSheetTestUtils.clearBufferAndResumeStyleInjection(); // Resume style injection after tests
   });
 
