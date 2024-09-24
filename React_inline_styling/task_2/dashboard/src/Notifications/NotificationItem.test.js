@@ -1,8 +1,17 @@
 import React from "react";
 import { shallow } from "enzyme";
 import NotificationItem from "./NotificationItem";
+import { StyleSheetTestUtils } from "aphrodite";
 
 describe("<NotificationItem />", () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection(); // Prevent style injection
+  });
+
+  afterAll(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection(); // Resume style injection after tests
+  });
+
   it("renders without crashing", () => {
     const wrapper = shallow(<NotificationItem />);
     expect(wrapper.exists()).toBe(true);

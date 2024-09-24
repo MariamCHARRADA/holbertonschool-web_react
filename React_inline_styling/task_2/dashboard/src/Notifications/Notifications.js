@@ -24,12 +24,6 @@ const styles = StyleSheet.create({
     top: "0px",
     right: "10px",
   },
-  defaultNotif: {
-    color: "rgb(4, 4, 177)",
-  },
-  urgentNotif: {
-    color: "red",
-  },
 });
 
 class Notifications extends Component {

@@ -1,6 +1,16 @@
 import React from "react";
 import { shallow } from "enzyme";
 import CourseListRow from "./CourseListRow";
+import { css } from "aphrodite";
+import { StyleSheetTestUtils } from "aphrodite";
+
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
 
 describe("<CourseListRow />", () => {
   it("renders one cell with colspan = 2 when isHeader is true and textSecondCell is null", () => {
@@ -40,17 +50,15 @@ describe("<CourseListRow />", () => {
     expect(tds.at(0).text()).toEqual("Data 1");
     expect(tds.at(1).text()).toEqual("Data 2");
   });
-  it("applies background color #deb5b545 when isHeader is true", () => {
+
+  it("applies the correct class when isHeader is true and textSecondCell is null", () => {
     const wrapper = shallow(
       <CourseListRow isHeader={true} textFirstCell="Header" />
     );
-    expect(wrapper.find("tr").prop("style")).toHaveProperty(
-      "backgroundColor",
-      "#deb5b545"
-    );
+    expect(wrapper.find("tr").hasClass(css(styles.headerRow))).toEqual(true);
   });
 
-  it("applies background color #deb5b545 when isHeader is true and textSecondCell is present", () => {
+  it("applies the correct class when isHeader is true and textSecondCell is present", () => {
     const wrapper = shallow(
       <CourseListRow
         isHeader={true}
@@ -58,13 +66,10 @@ describe("<CourseListRow />", () => {
         textSecondCell="Header 2"
       />
     );
-    expect(wrapper.find("tr").prop("style")).toHaveProperty(
-      "backgroundColor",
-      "#deb5b545"
-    );
+    expect(wrapper.find("tr").hasClass(css(styles.headerRow))).toEqual(true);
   });
 
-  it("applies background color #f5f5f5ab when isHeader is false", () => {
+  it("applies the correct class when isHeader is false", () => {
     const wrapper = shallow(
       <CourseListRow
         isHeader={false}
@@ -72,9 +77,6 @@ describe("<CourseListRow />", () => {
         textSecondCell="Data 2"
       />
     );
-    expect(wrapper.find("tr").prop("style")).toHaveProperty(
-      "backgroundColor",
-      "#f5f5f5ab"
-    );
+    expect(wrapper.find("tr").hasClass(css(styles.bodyRow))).toEqual(true);
   });
 });

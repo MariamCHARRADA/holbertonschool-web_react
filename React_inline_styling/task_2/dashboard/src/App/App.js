@@ -66,7 +66,7 @@ class App extends Component {
         <div className={css(styles.app)}>
           <Header />
           <div className={css(styles.body)}>
-            {isLoggedIn ? (
+            {!isLoggedIn ? (
               <BodySectionWithMarginBottom title="Course list">
                 <CourseList listCourses={listCourses} />
               </BodySectionWithMarginBottom>
