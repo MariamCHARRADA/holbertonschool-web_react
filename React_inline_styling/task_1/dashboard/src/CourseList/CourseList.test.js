@@ -2,12 +2,18 @@ import React from "react";
 import { shallow } from "enzyme";
 import CourseList from "./CourseList";
 import CourseListRow from "./CourseListRow";
+import { StyleSheetTestUtils } from "aphrodite";
 
 describe("<CourseList />", () => {
   let wrapper;
 
   beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection(); // Prevent style injection
     wrapper = shallow(<CourseList />);
+  });
+
+  afterAll(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection(); // Resume style injection after tests
   });
 
   describe("With default props", () => {
