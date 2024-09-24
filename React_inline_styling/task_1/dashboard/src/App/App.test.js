@@ -10,11 +10,11 @@ import { StyleSheetTestUtils } from "aphrodite";
 
 describe("<App />", () => {
   beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
+    StyleSheetTestUtils.suppressStyleInjection(); // Prevent style injection
   });
 
   afterEach(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection(); // Resume style injection after tests
   });
 
   it("renders App component without crashing", () => {
@@ -50,7 +50,6 @@ describe("<App />", () => {
   it("calls logOut and displays alert when Ctrl+h is pressed", () => {
     const logOutMock = jest.fn();
     const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
-
     const wrapper = mount(<App logOut={logOutMock} />);
 
     const event = new KeyboardEvent("keydown", { ctrlKey: true, key: "h" });
