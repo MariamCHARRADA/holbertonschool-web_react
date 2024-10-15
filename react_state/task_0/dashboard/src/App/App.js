@@ -44,6 +44,14 @@ const styles = StyleSheet.create({
 });
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayDrawer: false,
+    };
+    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+    this.handleHideDrawer = this.handleHideDrawer.bind(this);
+  }
   componentDidMount() {
     window.addEventListener("keydown", this.handleKeyDown);
   }
@@ -56,13 +64,25 @@ class App extends Component {
       this.props.logOut();
     }
   };
+  handleDisplayDrawer = () => {
+    this.setState({ displayDrawer: true });
+  };
+  handleHideDrawer = () => {
+    this.setState({ displayDrawer: false });
+  };
 
   render() {
     const { isLoggedIn } = this.props;
+    const { displayDrawer } = this.state;
 
     return (
       <>
-        <Notifications listNotifications={listNotifications} />
+        <Notifications
+          listNotifications={listNotifications}
+          displayDrawer={displayDrawer}
+          handleDisplayDrawer={this.handleDisplayDrawer}
+          handleHideDrawer={this.handleHideDrawer}
+        />
         <div className={css(styles.app)}>
           <Header />
           <div className={css(styles.body)}>
