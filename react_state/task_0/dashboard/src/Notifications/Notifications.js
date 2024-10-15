@@ -73,13 +73,16 @@ class Notifications extends Component {
   }
   handleClick() {
     console.log("Close button has been clicked");
+    this.props.handleHideDrawer();
   }
   markAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
   }
   shouldComponentUpdate(nextProps) {
     return (
-      nextProps.listNotifications.length > this.props.listNotifications.length
+      nextProps.listNotifications.length >
+        this.props.listNotifications.length ||
+      nextProps.displayDrawer != this.props.displayDrawer
     );
   }
 
@@ -133,10 +136,14 @@ class Notifications extends Component {
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool,
   listNotifications: PropTypes.arrayOf(NotificationItemShape),
+  handleDisplayDrawer: PropTypes.func,
+  handleHideDrawer: PropTypes.func,
 };
 Notifications.defaultProps = {
   displayDrawer: false,
   listNotifications: [],
+  handleDisplayDrawer: () => {},
+  handleHideDrawer: () => {},
 };
 
 export default Notifications;
