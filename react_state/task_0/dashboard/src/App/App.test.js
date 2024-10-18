@@ -10,11 +10,11 @@ import { StyleSheetTestUtils } from "aphrodite";
 
 describe("<App />", () => {
   beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection(); // Prevent style injection
+    StyleSheetTestUtils.suppressStyleInjection();
   });
 
   afterAll(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection(); // Resume style injection after tests
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
   });
 
   it("renders App component without crashing", () => {
@@ -61,6 +61,7 @@ describe("<App />", () => {
     alertMock.mockRestore();
     wrapper.unmount();
   });
+
   it("Has default state for displayDrawer false", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.state().displayDrawer).toEqual(false);
@@ -70,10 +71,10 @@ describe("<App />", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.state().displayDrawer).toEqual(false);
 
-    const instance = wrapper.instance(); // Get the instance of the component
-    instance.handleDisplayDrawer(); // Call the method to change the state
+    const instance = wrapper.instance();
+    instance.handleDisplayDrawer();
 
-    expect(wrapper.state().displayDrawer).toEqual(true); // Verify the state change
+    expect(wrapper.state().displayDrawer).toEqual(true);
   });
 
   it("displayDrawer changes to false when calling handleHideDrawer", () => {
