@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import NotificationItem from "./NotificationItem";
-import { getLatestNotification } from "../utils/utils";
 import PropTypes from "prop-types";
 import NotificationItemShape from "./NotificationItemShape";
 import { css, StyleSheet } from "aphrodite";
@@ -81,12 +80,7 @@ const styles = StyleSheet.create({
 class Notifications extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
     this.markAsRead = this.markAsRead.bind(this);
-  }
-  handleClick() {
-    console.log("Close button has been clicked");
-    this.props.handleHideDrawer();
   }
   markAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
@@ -95,21 +89,21 @@ class Notifications extends Component {
     return (
       nextProps.listNotifications.length >
         this.props.listNotifications.length ||
-      nextProps.displayDrawer != this.props.displayDrawer
+      nextProps.displayDrawer !== this.props.displayDrawer
     );
   }
 
   render() {
-    const { listNotifications, displayDrawer } = this.props;
+    const { listNotifications, displayDrawer, handleDisplayDrawer, handleHideDrawer } = this.props;
     const itemDisplay = displayDrawer ? styles.hideItem : styles.menuItem;
 
     return (
       <>
-        <div className={css(itemDisplay)} onClick={this.props.handleDisplayDrawer}>
+        <div className={css(itemDisplay)} id="menuItem" onClick={this.props.handleDisplayDrawer}>
           <p>Your notifications</p>
         </div>
         {displayDrawer && (
-          <div className={css(styles.notification)}>
+          <div className={css(styles.notification)} id="Notifications">
             <p>Here is the list of notifications</p>
             <ul className={css(styles.ul)}>
               {listNotifications.length === 0 ? (
@@ -118,9 +112,11 @@ class Notifications extends Component {
                 listNotifications.map((notification) => (
                   <NotificationItem
                     key={notification.id}
+                    id={notification.id}
                     type={notification.type}
                     value={notification.value}
                     html={notification.html}
+                    markAsRead={this.markAsRead}
                   />
                 ))
               )}
@@ -128,7 +124,8 @@ class Notifications extends Component {
             <button
               className={css(styles.closeButton)}
               aria-label="close"
-              onClick={this.handleClick}
+              id="closeButton"
+              onClick={handleHideDrawer}
             >
               x
             </button>
