@@ -38,7 +38,7 @@ describe("<App />", () => {
   });
 
   it("renders Login component when isLoggedIn is false", () => {
-    const wrapper = shallow(<App isLoggedIn={false} />);
+    const wrapper = shallow(<App />);
     expect(wrapper.find(Login).exists()).toBe(true);
   });
 
@@ -51,7 +51,7 @@ describe("<App />", () => {
     const logOutMock = jest.fn();
     const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
     const wrapper = mount(<App logOut={logOutMock} />);
-
+    
     const event = new KeyboardEvent("keydown", { ctrlKey: true, key: "h" });
     window.dispatchEvent(event);
 
@@ -83,11 +83,9 @@ describe("<App />", () => {
 
     const instance = wrapper.instance();
     instance.handleDisplayDrawer();
-
     expect(wrapper.state().displayDrawer).toEqual(true);
 
     instance.handleHideDrawer();
-
     expect(wrapper.state().displayDrawer).toEqual(false);
   });
 });
