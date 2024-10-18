@@ -61,12 +61,32 @@ describe("<App />", () => {
     alertMock.mockRestore();
     wrapper.unmount();
   });
-  it("calls handleDisplayDrawer when menuItem is clicked", () => {
+  it("Has default state for displayDrawer false", () => {
     const wrapper = shallow(<App />);
-    const instance = wrapper.instance();
+    expect(wrapper.state().displayDrawer).toEqual(false);
+  });
 
+  it("displayDrawer changes to true when calling handleDisplayDrawer", () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.state().displayDrawer).toEqual(false);
+
+    const instance = wrapper.instance(); // Get the instance of the component
+    instance.handleDisplayDrawer(); // Call the method to change the state
+
+    expect(wrapper.state().displayDrawer).toEqual(true); // Verify the state change
+  });
+
+  it("displayDrawer changes to false when calling handleHideDrawer", () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.state().displayDrawer).toEqual(false);
+
+    const instance = wrapper.instance();
     instance.handleDisplayDrawer();
 
-    expect(wrapper.state("displayDrawer")).toBe(true);
+    expect(wrapper.state().displayDrawer).toEqual(true);
+
+    instance.handleHideDrawer();
+
+    expect(wrapper.state().displayDrawer).toEqual(false);
   });
 });
