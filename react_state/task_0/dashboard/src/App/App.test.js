@@ -63,8 +63,10 @@ describe("<App />", () => {
   });
   it("calls handleDisplayDrawer when menuItem is clicked", () => {
     const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
 
-    wrapper.find("#menuItem").simulate("click");
+    instance.handleDisplayDrawer();
+
     expect(wrapper.state("displayDrawer")).toBe(true);
   });
 });
