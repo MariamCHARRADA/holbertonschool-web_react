@@ -157,5 +157,27 @@ describe("<Notifications />", () => {
         updatedListNotifications.length
       );
     });
+    it("should call handleDisplayDrawer when the menu item is clicked", () => {
+      const handleDisplayDrawer = jest.fn();
+      const wrapper = shallow(
+        <Notifications handleDisplayDrawer={handleDisplayDrawer} />
+      );
+
+      wrapper.find(".menuItem").simulate("click");
+      expect(handleDisplayDrawer).toHaveBeenCalled();
+    });
+
+    it("should hide the drawer when handleHideDrawer is clicked", () => {
+      const handleHideDrawer = jest.fn();
+      const wrapper = shallow(
+        <Notifications
+          displayDrawer={true}
+          handleHideDrawer={handleHideDrawer}
+        />
+      );
+
+      wrapper.find('button[aria-label="close"]').simulate("click");
+      expect(handleHideDrawer).toHaveBeenCalled();
+    });
   });
 });

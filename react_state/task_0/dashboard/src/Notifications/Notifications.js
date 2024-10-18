@@ -92,7 +92,7 @@ class Notifications extends Component {
 
     return (
       <>
-        <div className={css(itemDisplay)}>
+        <div className={css(itemDisplay)} onClick={this.props.handleDisplayDrawer}>
           <p>Your notifications</p>
         </div>
         {displayDrawer && (
