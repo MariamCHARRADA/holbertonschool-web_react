@@ -61,4 +61,10 @@ describe("<App />", () => {
     alertMock.mockRestore();
     wrapper.unmount();
   });
+  it("calls handleDisplayDrawer when menuItem is clicked", () => {
+    const wrapper = shallow(<App />);
+
+    wrapper.find("#menuItem").simulate("click");
+    expect(wrapper.state("displayDrawer")).toBe(true);
+  });
 });
