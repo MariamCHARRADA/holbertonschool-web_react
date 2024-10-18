@@ -59,9 +59,22 @@ const styles = StyleSheet.create({
   },
   ul: {
     listStyleType: "none",
-    padding: 0,
+    padding: 12,
     top: 0,
     margin: "10px",
+  },
+  closeButton: {
+    position: "absolute",
+    right: "5px",
+    top: "5px",
+    cursor: "pointer",
+    backgroundColor: "transparent",
+    border: "none",
+    "@media (max-width: 900px)": {
+      fontSize: "15px",
+      top: "0px",
+      right: "30px",
+    },
   },
 });
 
@@ -113,14 +126,7 @@ class Notifications extends Component {
               )}
             </ul>
             <button
-              style={{
-                position: "absolute",
-                right: "5px",
-                top: "5px",
-                cursor: "pointer",
-                backgroundColor: "transparent",
-                border: "none",
-              }}
+              className={css(styles.closeButton)}
               aria-label="close"
               onClick={this.handleClick}
             >
