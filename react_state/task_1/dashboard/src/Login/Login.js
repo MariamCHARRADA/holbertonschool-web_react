@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { css, StyleSheet } from "aphrodite";
 
 const styles = StyleSheet.create({
@@ -27,20 +27,62 @@ const styles = StyleSheet.create({
   },
 });
 function Login() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [enableSubmit, setEnableSubmit] = useState(false);
+
+  const handleLoginSubmit = (event) => {
+    event.preventDefault();
+    setIsLoggedIn(true);
+  };
+
+  const handleChange = (event) => {
+    if (email.trim() !== "" && password.trim() !== "") {
+      setEnableSubmit(true);
+    } else {
+      setEnableSubmit(false);
+    }
+  };
   return (
     <>
       <div className={css(styles.body)}>
         <p>Login to access the full dashboard</p>
-        <div className={css(styles.form)}>
-          <label className={css(styles.label)}>Email: </label>
-          <input className={css(styles.input)}></input>
-        </div>
-        <div className={css(styles.form)}>
-          <label className={css(styles.label)}>Password: </label>
-          <input className={css(styles.input)}></input>
-        </div>
+        <form onSubmit={handleLoginSubmit}>
+          <div className={css(styles.form)}>
+            <label className={css(styles.label)}>Email: </label>
+            <input
+              className={css(styles.input)}
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value); //the actual thing being typed
+                handleChange();
+              }}
+              required
+            />
+          </div>
+          <div className={css(styles.form)}>
+            <label className={css(styles.label)}>Password: </label>
+            <input
+              className={css(styles.input)}
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                handleChange();
+              }}
+              required
+            />
+          </div>
 
-        <button className={css(styles.button)}>OK</button>
+          <input
+            type="submit"
+            className={css(styles.button)}
+            value="OK"
+            disabled={!enableSubmit}
+          />
+        </form>
       </div>
     </>
   );
