@@ -26,15 +26,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-function Login() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function Login({ logIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [enableSubmit, setEnableSubmit] = useState(false);
 
   const handleLoginSubmit = (event) => {
     event.preventDefault();
-    setIsLoggedIn(true);
+    logIn(email, password);
   };
 
   const handleChange = (event) => {

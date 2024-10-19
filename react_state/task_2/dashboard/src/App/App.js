@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Login from "../Login/Login";
 import Notifications from "../Notifications/Notifications";
+import AppContext from "./AppContext";
 import PropTypes from "prop-types";
 import CourseList from "../CourseList/CourseList";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
@@ -48,10 +49,18 @@ class App extends Component {
     super(props);
     this.state = {
       displayDrawer: false,
+      user: {
+        email: "",
+        password: "",
+        isLoggedIn: false,
+      },
+      logOut: this.logOut,
     };
+
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
   }
+
   componentDidMount() {
     window.addEventListener("keydown", this.handleKeyDown);
   }
@@ -61,7 +70,7 @@ class App extends Component {
   handleKeyDown = (event) => {
     if (event.ctrlKey && event.key === "h") {
       alert("Logging you out");
-      this.props.logOut();
+      this.state.logOut();
     }
   };
   handleDisplayDrawer = () => {
@@ -70,13 +79,33 @@ class App extends Component {
   handleHideDrawer = () => {
     this.setState({ displayDrawer: false });
   };
+  logOut = () => {
+    this.setState = {
+      user: {
+        email: "",
+        password: "",
+        isLoggedIn: false,
+      },
+    };
+    console.log("User gone");
+  };
+  logIn = (email, password) => {
+    this.setState({
+      user: {
+        email: email,
+        password: password,
+        isLoggedIn: true,
+      },
+    });
+  };
 
   render() {
-    const { isLoggedIn } = this.props;
-    const { displayDrawer } = this.state;
+    const { user, displayDrawer } = this.state;
 
     return (
-      <>
+      <AppContext.Provider
+        value={{ user: user, logOut: this.logOut }}
+      >
         <Notifications
           listNotifications={listNotifications}
           displayDrawer={displayDrawer}
@@ -86,16 +115,13 @@ class App extends Component {
         <div className={css(styles.app)}>
           <Header />
           <div className={css(styles.body)}>
-            {isLoggedIn ? (
+            {this.state.user.isLoggedIn ? (
               <BodySectionWithMarginBottom title="Course list">
                 <CourseList listCourses={listCourses} />
               </BodySectionWithMarginBottom>
             ) : (
-              <BodySectionWithMarginBottom
-                title="
-            Log in to continue"
-              >
-                <Login />
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login logIn={this.logIn} />
               </BodySectionWithMarginBottom>
             )}
             <BodySection title="News from the School">
@@ -114,16 +140,15 @@ class App extends Component {
             <Footer />
           </div>
         </div>
-      </>
+      </AppContext.Provider>
     );
   }
 }
+
 App.propTypes = {
-  isLoggedIn: PropTypes.bool,
   logOut: PropTypes.func,
 };
 App.defaultProps = {
-  isLoggedIn: false,
   logOut: () => {},
 };
 
