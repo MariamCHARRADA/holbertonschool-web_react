@@ -93,4 +93,32 @@ describe("<App />", () => {
     wrapper.instance().handleHideDrawer();
     expect(wrapper.state().displayDrawer).toEqual(false);
   });
+
+  it("markNotificationAsRead removes the correct notification from the list", () => {
+    const wrapper = shallow(<App />);
+    wrapper.setState({
+      listNotifications: [
+        { id: 1, type: "default", value: "New course available" },
+        { id: 2, type: "default", value: "New resume available" },
+        {
+          id: 3,
+          type: "urgent",
+          html: { __html: "<strong>Urgent requirement</strong>" },
+        },
+      ],
+    });
+
+    wrapper.instance().markNotificationAsRead(2);
+
+    const updatedNotifications = wrapper.state().listNotifications;
+    expect(updatedNotifications).toHaveLength(2);
+    expect(updatedNotifications).toEqual([
+      { id: 1, type: "default", value: "New course available" },
+      {
+        id: 3,
+        type: "urgent",
+        html: { __html: "<strong>Urgent requirement</strong>" },
+      },
+    ]);
+  });
 });

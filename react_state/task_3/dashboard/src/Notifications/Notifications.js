@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
 import NotificationItemShape from "./NotificationItemShape";
@@ -77,29 +77,24 @@ const styles = StyleSheet.create({
   },
 });
 
-class Notifications extends Component {
-  constructor(props) {
-    super(props);
-    this.markAsRead = this.markAsRead.bind(this);
-  }
-  markAsRead(id) {
-    console.log(`Notification ${id} has been marked as read`);
-  }
-  shouldComponentUpdate(nextProps) {
-    return (
-      nextProps.listNotifications.length >
-        this.props.listNotifications.length ||
-      nextProps.displayDrawer !== this.props.displayDrawer
-    );
-  }
-
+class Notifications extends PureComponent {
   render() {
-    const { listNotifications, displayDrawer, handleDisplayDrawer, handleHideDrawer } = this.props;
+    const {
+      listNotifications,
+      displayDrawer,
+      handleDisplayDrawer,
+      handleHideDrawer,
+      markNotificationAsRead,
+    } = this.props;
     const itemDisplay = displayDrawer ? styles.hideItem : styles.menuItem;
 
     return (
       <>
-        <div className={css(itemDisplay)} id="menuItem" onClick={handleDisplayDrawer}>
+        <div
+          className={css(itemDisplay)}
+          id="menuItem"
+          onClick={handleDisplayDrawer}
+        >
           <p>Your notifications</p>
         </div>
         {displayDrawer && (
@@ -116,7 +111,7 @@ class Notifications extends Component {
                     type={notification.type}
                     value={notification.value}
                     html={notification.html}
-                    markAsRead={this.markAsRead}
+                    markAsRead={() => markNotificationAsRead(notification.id)}
                   />
                 ))
               )}
@@ -141,12 +136,14 @@ Notifications.propTypes = {
   listNotifications: PropTypes.arrayOf(NotificationItemShape),
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
+  markNotificationAsRead: PropTypes.func,
 };
 Notifications.defaultProps = {
   displayDrawer: false,
   listNotifications: [],
   handleDisplayDrawer: () => {},
   handleHideDrawer: () => {},
+  markAsRead: () => {},
 };
 
 export default Notifications;

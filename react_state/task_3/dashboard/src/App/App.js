@@ -48,6 +48,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      listNotifications : [
+        { id: 1, type: "default", value: "New course available" },
+        { id: 2, type: "default", value: "New resume available" },
+        { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
+      ],
       displayDrawer: false,
       user: defaultUser,
       logOut: this.logOut,
@@ -60,6 +65,8 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
+
+    this.markNotificationAsRead= this.markNotificationAsRead.bind(this);
   }
 
   componentDidMount() {
@@ -98,13 +105,22 @@ class App extends Component {
     });
   }
 
+  markNotificationAsRead(id) {
+    this.setState({
+      listNotifications: this.state.listNotifications.filter(
+        (notification) => notification.id !== id,
+      ),
+    });
+  }
+
   render() {
-    const { user, displayDrawer } = this.state;
+    const { user, displayDrawer, listNotifications } = this.state;
 
     return (
       <AppContext.Provider value={{ user: user, logOut: this.logOut }}>
         <Notifications
           listNotifications={listNotifications}
+          markNotificationAsRead={this.markNotificationAsRead}
           displayDrawer={displayDrawer}
           handleDisplayDrawer={this.handleDisplayDrawer}
           handleHideDrawer={this.handleHideDrawer}

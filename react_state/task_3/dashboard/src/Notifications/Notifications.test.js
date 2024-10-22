@@ -180,4 +180,20 @@ describe("<Notifications />", () => {
       expect(handleHideDrawer).toHaveBeenCalled();
     });
   });
+  it("renders Notification items and calls markNotificationAsRead", () => {
+    const markNotificationAsRead = jest.fn();
+    const wrapper = shallow(
+      <Notifications
+        listNotifications={[
+          { id: 1, type: "default", value: "New course available" },
+          { id: 2, type: "urgent", value: "New resume available" },
+        ]}
+        markNotificationAsRead={markNotificationAsRead}
+        displayDrawer={true}
+      />
+    );
+
+    wrapper.find("NotificationItem").at(0).props().markAsRead();
+    expect(markNotificationAsRead).toHaveBeenCalledWith(1);
+  });
 });
