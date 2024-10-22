@@ -27,7 +27,7 @@ describe("<App />", () => {
     expect(wrapper.find("Header")).toHaveLength(1);
   });
 
-  it("should contain the Login component", () => {
+  it("should contain the Login component by default (when user is not logged in)", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find("Login")).toHaveLength(1);
   });
@@ -37,18 +37,19 @@ describe("<App />", () => {
     expect(wrapper.find("Footer")).toHaveLength(1);
   });
 
-  it("CourseList is not displayed with isLoggedIn false by default", () => {
+  it("CourseList is not displayed when the user is not logged in (default state)", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find("CourseList")).toHaveLength(0);
   });
 
-  it("isLoggedIn is true", () => {
-    const wrapper = shallow(<App isLoggedIn />);
+  it("should display CourseList and hide Login when isLoggedIn state is true", () => {
+    const wrapper = shallow(<App />);
+    wrapper.setState({ user: { isLoggedIn: true } });
     expect(wrapper.find("Login")).toHaveLength(0);
     expect(wrapper.find("CourseList")).toHaveLength(1);
   });
 
-  it("when the keys control and h are pressed the logOut function, passed as a prop, is called and the alert function is called with the string Logging you out", () => {
+  it("when the keys control and h are pressed, the logOut function is called and the alert function is called with 'Logging you out'", () => {
     const events = {};
     const logOut = jest.fn();
 
@@ -58,7 +59,8 @@ describe("<App />", () => {
 
     window.alert = jest.fn();
 
-    shallow(<App logOut={logOut} />);
+    const wrapper = shallow(<App />);
+    wrapper.setState({ logOut });
 
     events.keydown({ key: "h", ctrlKey: true });
 
@@ -68,7 +70,7 @@ describe("<App />", () => {
     jest.restoreAllMocks();
   });
 
-  it("Has default state for displayDrawer false", () => {
+  it("Has default state displayDrawer as false", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.state().displayDrawer).toEqual(false);
   });
@@ -82,16 +84,13 @@ describe("<App />", () => {
     expect(wrapper.state().displayDrawer).toEqual(true);
   });
 
-  it("displayDrawer changes to false when calling handleHideDrawer", () => {
+  it("displayDrawer changes back to false when calling handleHideDrawer", () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.state().displayDrawer).toEqual(false);
 
     wrapper.instance().handleDisplayDrawer();
-
     expect(wrapper.state().displayDrawer).toEqual(true);
 
     wrapper.instance().handleHideDrawer();
-
     expect(wrapper.state().displayDrawer).toEqual(false);
   });
 });

@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+
 function Login({ logIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

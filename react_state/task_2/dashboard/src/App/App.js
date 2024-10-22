@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Login from "../Login/Login";
 import Notifications from "../Notifications/Notifications";
-import AppContext from "./AppContext";
+import AppContext, { defaultUser } from "./AppContext";
 import PropTypes from "prop-types";
 import CourseList from "../CourseList/CourseList";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
@@ -49,16 +49,17 @@ class App extends Component {
     super(props);
     this.state = {
       displayDrawer: false,
-      user: {
-        email: "",
-        password: "",
-        isLoggedIn: false,
-      },
+      user: defaultUser,
       logOut: this.logOut,
     };
 
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
+
+    this.logIn = this.logIn.bind(this);
+    this.logOut = this.logOut.bind(this);
+
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
@@ -70,7 +71,7 @@ class App extends Component {
   handleKeyDown = (event) => {
     if (event.ctrlKey && event.key === "h") {
       alert("Logging you out");
-      this.state.logOut();
+      this.logOut();
     }
   };
   handleDisplayDrawer = () => {
@@ -79,17 +80,15 @@ class App extends Component {
   handleHideDrawer = () => {
     this.setState({ displayDrawer: false });
   };
-  logOut = () => {
-    this.setState = {
-      user: {
-        email: "",
-        password: "",
-        isLoggedIn: false,
-      },
-    };
+
+  logOut() {
+    this.setState({
+      user: defaultUser,
+    });
     console.log("User gone");
-  };
-  logIn = (email, password) => {
+  }
+
+  logIn(email, password) {
     this.setState({
       user: {
         email: email,
@@ -97,15 +96,13 @@ class App extends Component {
         isLoggedIn: true,
       },
     });
-  };
+  }
 
   render() {
     const { user, displayDrawer } = this.state;
 
     return (
-      <AppContext.Provider
-        value={{ user: user, logOut: this.logOut }}
-      >
+      <AppContext.Provider value={{ user: user, logOut: this.logOut }}>
         <Notifications
           listNotifications={listNotifications}
           displayDrawer={displayDrawer}
@@ -115,7 +112,7 @@ class App extends Component {
         <div className={css(styles.app)}>
           <Header />
           <div className={css(styles.body)}>
-            {this.state.user.isLoggedIn ? (
+            {user.isLoggedIn ? (
               <BodySectionWithMarginBottom title="Course list">
                 <CourseList listCourses={listCourses} />
               </BodySectionWithMarginBottom>
