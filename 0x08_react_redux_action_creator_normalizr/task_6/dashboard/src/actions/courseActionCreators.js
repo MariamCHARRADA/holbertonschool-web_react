@@ -14,3 +14,8 @@ export function unSelectCourse(index) {
     payload: { index },
   };
 }
+export const boundSelectCourse = (index) => (dispatch) =>
+  bindActionCreators(selectCourse, dispatch)(index);
+
+export const boundUnSelectCourse = (index) => (dispatch) =>
+  bindActionCreators(unSelectCourse, dispatch)(index);
