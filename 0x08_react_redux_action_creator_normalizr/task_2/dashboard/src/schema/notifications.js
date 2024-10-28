@@ -1,17 +1,6 @@
 import * as notifications from "../../notifications.json";
 import { normalize, schema } from "normalizr";
 
-export function getAllNotificationsByUser(userId) {
-  const list = [];
-
-  for (let i = 0; i < notifications.default.length; i++) {
-    const notification = notifications.default[i];
-    if (notification.author.id === userId) {
-      list.push(notification.context);
-    }
-  }
-  return list;
-}
 const user = new schema.Entity("users");
 const message = new schema.Entity(
   "messages",
@@ -27,5 +16,17 @@ const notification = new schema.Entity("notifications", {
 });
 
 const normalized = normalize(notifications.default, [notification]);
+
+export function getAllNotificationsByUser(userId) {
+  const list = [];
+
+  for (const notificationId of normalized.result) {
+    const notification = normalized.entities.notifications[notificationId];
+    if (notification.author === userId) {
+      list.push(normalized.entities.messages[notification.context]);
+    }
+  }
+  return list;
+}
 
 export { normalized };
