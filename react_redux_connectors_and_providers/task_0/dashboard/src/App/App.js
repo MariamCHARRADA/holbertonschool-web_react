@@ -10,6 +10,7 @@ import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBot
 import BodySection from "../BodySection/BodySection";
 import { getLatestNotification } from "../utils/utils";
 import { StyleSheet, css } from "aphrodite";
+import { connect } from "react-redux";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },
@@ -48,7 +49,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listNotifications : [
+      listNotifications: [
         { id: 1, type: "default", value: "New course available" },
         { id: 2, type: "default", value: "New resume available" },
         { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
@@ -66,7 +67,7 @@ class App extends Component {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
 
-    this.markNotificationAsRead= this.markNotificationAsRead.bind(this);
+    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
 
   componentDidMount() {
@@ -108,13 +109,14 @@ class App extends Component {
   markNotificationAsRead(id) {
     this.setState({
       listNotifications: this.state.listNotifications.filter(
-        (notification) => notification.id !== id,
+        (notification) => notification.id !== id
       ),
     });
   }
 
   render() {
     const { user, displayDrawer, listNotifications } = this.state;
+    const { isLoggedIn } = this.props;
 
     return (
       <AppContext.Provider value={{ user: user, logOut: this.logOut }}>
@@ -165,4 +167,8 @@ App.defaultProps = {
   logOut: () => {},
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.uiReducer.get("isUserLoggedIn"),
+});
+
+export default connect(mapStateToProps)(App);
