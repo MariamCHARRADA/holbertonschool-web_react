@@ -1,6 +1,8 @@
 import { shallow } from "enzyme";
 import React from "react";
 import App from "./App";
+import { mapStateToProps } from "./App";
+import { fromJS } from "immutable";
 import { StyleSheetTestUtils } from "aphrodite";
 
 describe("<App />", () => {
@@ -120,5 +122,15 @@ describe("<App />", () => {
         html: { __html: "<strong>Urgent requirement</strong>" },
       },
     ]);
+  });
+});
+describe("mapStateToProps", () => {
+  it("should return the correct object from Redux state", () => {
+    const state = fromJS({
+      isUserLoggedIn: true,
+    });
+    const expectedProps = { isLoggedIn: true };
+
+    expect(mapStateToProps(state)).toEqual(expectedProps);
   });
 });
