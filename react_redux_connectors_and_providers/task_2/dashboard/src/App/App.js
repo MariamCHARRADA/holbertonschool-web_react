@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  loginRequest,
 } from "../actions/uiActionCreators";
 
 const listCourses = [
@@ -77,26 +78,9 @@ class App extends Component {
   handleKeyDown = (event) => {
     if (event.ctrlKey && event.key === "h") {
       alert("Logging you out");
-      this.logOut();
+      this.props.logOut();
     }
   };
-
-  logOut() {
-    this.setState({
-      user: defaultUser,
-    });
-    console.log("User gone");
-  }
-
-  logIn(email, password) {
-    this.setState({
-      user: {
-        email: email,
-        password: password,
-        isLoggedIn: true,
-      },
-    });
-  }
 
   markNotificationAsRead(id) {
     this.setState({
@@ -113,10 +97,11 @@ class App extends Component {
       displayDrawer,
       displayNotificationDrawer,
       hideNotificationDrawer,
+      loginRequest,
     } = this.props;
 
     return (
-      <AppContext.Provider value={{ user: user, logOut: this.logOut }}>
+      <AppContext.Provider value={{ user: user, logOut: this.props.logOut }}>
         <Notifications
           listNotifications={listNotifications}
           markNotificationAsRead={this.markNotificationAsRead}
@@ -133,7 +118,7 @@ class App extends Component {
               </BodySectionWithMarginBottom>
             ) : (
               <BodySectionWithMarginBottom title="Log in to continue">
-                <Login logIn={this.logIn} />
+                <Login logIn={loginRequest} />
               </BodySectionWithMarginBottom>
             )}
             <BodySection title="News from the School">
@@ -163,6 +148,7 @@ App.propTypes = {
   displayDrawer: PropTypes.bool,
   displayNotificationDrawer: PropTypes.func,
   hideNotificationDrawer: PropTypes.func,
+  loginRequest: PropTypes.func,
 };
 App.defaultProps = {
   logOut: () => {},
@@ -178,5 +164,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  loginRequest,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);
