@@ -54,6 +54,7 @@ class App extends Component {
         { id: 2, type: "default", value: "New resume available" },
         { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
       ],
+      displayDrawer: false,
       user: defaultUser,
       logOut: this.logOut,
     };
@@ -80,6 +81,12 @@ class App extends Component {
       alert("Logging you out");
       this.logOut();
     }
+  };
+  handleDisplayDrawer = () => {
+    this.setState({ displayDrawer: true });
+  };
+  handleHideDrawer = () => {
+    this.setState({ displayDrawer: false });
   };
 
   logOut() {
@@ -108,8 +115,8 @@ class App extends Component {
   }
 
   render() {
-    const { user, listNotifications } = this.state;
-    const { isLoggedIn, displayDrawer } = this.props;
+    const { user, displayDrawer, listNotifications } = this.state;
+    const { isLoggedIn } = this.props;
 
     return (
       <AppContext.Provider value={{ user: user, logOut: this.logOut }}>
@@ -117,11 +124,13 @@ class App extends Component {
           listNotifications={listNotifications}
           markNotificationAsRead={this.markNotificationAsRead}
           displayDrawer={displayDrawer}
+          handleDisplayDrawer={this.handleDisplayDrawer}
+          handleHideDrawer={this.handleHideDrawer}
         />
         <div className={css(styles.app)}>
           <Header />
           <div className={css(styles.body)}>
-            {isLoggedIn ? (
+            {user.isLoggedIn ? (
               <BodySectionWithMarginBottom title="Course list">
                 <CourseList listCourses={listCourses} />
               </BodySectionWithMarginBottom>
@@ -159,8 +168,7 @@ App.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.get("isUserLoggedIn"),
-  displayDrawer: state.get("isNotificationDrawerVisible"),
+  isLoggedIn: state.uiReducer.get("isUserLoggedIn"),
 });
 
 export default connect(mapStateToProps)(App);
