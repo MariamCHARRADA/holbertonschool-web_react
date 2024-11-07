@@ -62,14 +62,9 @@ class App extends Component {
       logOut: this.logOut,
     };
 
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
-
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
-
     this.handleKeyDown = this.handleKeyDown.bind(this);
-
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
 
@@ -164,9 +159,15 @@ class App extends Component {
 
 App.propTypes = {
   logOut: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
+  displayDrawer: PropTypes.bool,
+  displayNotificationDrawer: PropTypes.func,
+  hideNotificationDrawer: PropTypes.func,
 };
 App.defaultProps = {
   logOut: () => {},
+  isLoggedIn: false,
+  displayDrawer: false,
 };
 
 const mapStateToProps = (state) => ({
