@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import logo from "../assets/holberton-logo.jpg";
 import AppContext from "../App/AppContext";
 import { css, StyleSheet } from "aphrodite";
@@ -28,29 +28,25 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
 });
-class Header extends Component {
-  static contextType = AppContext;
+const Header = () => {
+  const { user, logOut } = useContext(AppContext);
 
-  render() {
-    const { user, logOut } = this.context;
-
-    return (
-      <header className={css(styles.header)}>
-        <img src={logo} className={css(styles.logo)} alt="logo" />
-        <h1 className={css(styles.h1)}>School dashboard</h1>
-        {user.isLoggedIn && (
-          <div id="logoutSection" className={css(styles.logOut)}>
-            <p>
-              Welcome {user.email}{" "}
-              <a href="#" onClick={logOut}>
-                (logout)
-              </a>
-            </p>
-          </div>
-        )}
-      </header>
-    );
-  }
-}
+  return (
+    <header className={css(styles.header)}>
+      <img src={logo} className={css(styles.logo)} alt="logo" />
+      <h1 className={css(styles.h1)}>School dashboard</h1>
+      {user.isLoggedIn && (
+        <div id="logoutSection" className={css(styles.logOut)}>
+          <p>
+            Welcome {user.email}{" "}
+            <a href="#" onClick={logOut}>
+              (logout)
+            </a>
+          </p>
+        </div>
+      )}
+    </header>
+  );
+};
 
 export default Header;
