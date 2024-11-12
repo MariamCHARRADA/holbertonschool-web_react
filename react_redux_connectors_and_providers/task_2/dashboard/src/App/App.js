@@ -15,6 +15,7 @@ import {
   displayNotificationDrawer,
   hideNotificationDrawer,
   loginRequest,
+  logout,
 } from "../actions/uiActionCreators";
 
 const listCourses = [
@@ -22,7 +23,7 @@ const listCourses = [
   { id: 2, name: "Webpack", credit: 20 },
   { id: 3, name: "React", credit: 40 },
 ];
-const listNotifications = [
+export const listNotifications = [
   { id: 1, type: "default", value: "New course available" },
   { id: 2, type: "default", value: "New resume available" },
   { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
@@ -54,17 +55,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listNotifications: [
-        { id: 1, type: "default", value: "New course available" },
-        { id: 2, type: "default", value: "New resume available" },
-        { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
-      ],
-      user: defaultUser,
-      logOut: this.logOut,
+      listNotifications: listNotifications,
     };
-
-    this.logIn = this.logIn.bind(this);
-    this.logOut = this.logOut.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
@@ -78,7 +70,7 @@ class App extends Component {
   handleKeyDown = (event) => {
     if (event.ctrlKey && event.key === "h") {
       alert("Logging you out");
-      this.props.logOut();
+      this.props.logout();
     }
   };
 
@@ -91,19 +83,19 @@ class App extends Component {
   }
 
   render() {
-    const { user, listNotifications } = this.state;
     const {
       isLoggedIn,
       displayDrawer,
       displayNotificationDrawer,
       hideNotificationDrawer,
       loginRequest,
+      user,
     } = this.props;
 
     return (
-      <AppContext.Provider value={{ user: user, logOut: this.props.logOut }}>
+      <AppContext.Provider value={{ user: user, logOut: this.props.logout }}>
         <Notifications
-          listNotifications={listNotifications}
+          listNotifications={this.state.listNotifications}
           markNotificationAsRead={this.markNotificationAsRead}
           displayDrawer={displayDrawer}
           handleDisplayDrawer={displayNotificationDrawer}
@@ -143,27 +135,34 @@ class App extends Component {
 }
 
 App.propTypes = {
-  logOut: PropTypes.func,
   isLoggedIn: PropTypes.bool,
   displayDrawer: PropTypes.bool,
   displayNotificationDrawer: PropTypes.func,
   hideNotificationDrawer: PropTypes.func,
   loginRequest: PropTypes.func,
+  logout: PropTypes.func,
+  user: PropTypes.object,
 };
 App.defaultProps = {
-  logOut: () => {},
   isLoggedIn: false,
   displayDrawer: false,
+  displayNotificationDrawer: () => {},
+  hideNotificationDrawer: () => {},
+  loginRequest: () => {},
+  logout: () => {},
+  user: defaultUser,
 };
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.get("isUserLoggedIn"),
   displayDrawer: state.get("isNotificationDrawerVisible"),
+  user: state.get("user"),
 });
 
 const mapDispatchToProps = {
   displayNotificationDrawer,
   hideNotificationDrawer,
   loginRequest,
+  logout,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);
