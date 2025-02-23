@@ -28,13 +28,17 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
 });
+
+// Functional component using hooks
 const Header = () => {
+  // Consume context values using useContext
   const { user, logOut } = useContext(AppContext);
 
   return (
     <header className={css(styles.header)}>
       <img src={logo} className={css(styles.logo)} alt="logo" />
       <h1 className={css(styles.h1)}>School dashboard</h1>
+      {/* Conditionally render the logout section */}
       {user.isLoggedIn && (
         <div id="logoutSection" className={css(styles.logOut)}>
           <p>
