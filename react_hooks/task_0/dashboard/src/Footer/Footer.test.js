@@ -1,46 +1,40 @@
 import React from "react";
-import { shallow } from "enzyme";
-import Footer from "./Footer";
+import { render, screen } from "@testing-library/react";
 import AppContext from "../App/AppContext";
+import Footer from "./Footer";
 
-describe("<Footer />", () => {
-  it("renders without crashing", () => {
-    const wrapper = shallow(<Footer />);
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it("renders the text 'Copyright'", () => {
-    const wrapper = shallow(<Footer />);
-    expect(wrapper.text()).toContain("Copyright");
-  });
-
-  it("does not display the Contact us link when the user is logged out", () => {
-    const contextValue = {
-      user: {
-        isLoggedIn: false,
-      },
-    };
-    const wrapper = shallow(
-      <AppContext.Provider value={contextValue}>
+describe("Footer Component", () => {
+  test("renders the copyright text", () => {
+    render(
+      <AppContext.Provider value={{ user: { isLoggedIn: false } }}>
         <Footer />
       </AppContext.Provider>
     );
-    expect(wrapper.find("a").length).toBe(0);
+
+    const copyrightText = screen.getByText(/Copyright \d{4} - Holberton School/i);
+    expect(copyrightText).toBeInTheDocument();
   });
 
-  it("displays the Contact us link when the user is logged in", () => {
-    const contextValue = {
-      user: {
-        isLoggedIn: true,
-        email: "user@example.com",
-      },
-    };
-    const wrapper = shallow(
-      <AppContext.Provider value={contextValue}>
+  test("does not show contact link when user is not logged in", () => {
+    render(
+      <AppContext.Provider value={{ user: { isLoggedIn: false } }}>
         <Footer />
       </AppContext.Provider>
     );
-    expect(wrapper.find("a").length).toBe(1);
-    expect(wrapper.find("a").text()).toBe("Contact us");
+
+    expect(screen.queryByText(/Contact us/i)).not.toBeInTheDocument();
+  });
+
+  test("shows contact link when user is logged in", () => {
+    const user = { isLoggedIn: true };
+
+    render(
+      <AppContext.Provider value={{ user }}>
+        <Footer />
+      </AppContext.Provider>
+    );
+
+    const contactLink = screen.getByText(/Contact us/i);
+    expect(contactLink).toBeInTheDocument();
   });
 });
